@@ -1,9 +1,80 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <title>Home</title>
+    <!-- I should change this at some point -->
+    <title>My Portfolio</title>
+
+    <!-- Load Our CSS In -->
+    <link rel="stylesheet" type="text/css" href="./css/vue-material.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/vue-material-default.min.css">
+
+    <style>
+        /* Center the content a little */
+        div#wrapper {
+            margin: 0 10% 0 10%;
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- Vue/VueMaterial Required JavaScript -->
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/vue-material.min.js"></script>
+
+    <!-- Div for Vue to bind to -->
+    <div id="vue-root">
+        <md-app md-waterfall md-mode="fixed">
+            <md-app-toolbar>
+                <span class="md-title">Recchan (Byron Vanstien)</span>
+            </md-app-toolbar>
+        </md-app>
+        <div id="wrapper">
+            <div class="md-layout md-gutter">
+                <div class="md-layout-item" v-for="project in projects" style="min-width: 33%; margin-top: 1%;">
+                    <md-card md-with-hover>
+                        <md-ripple>
+                        <md-card-header>
+                            <md-card-header-text>
+                                <div class="md-title">{{ project.name }}</div>
+                                <div class="md-subhead">{{ project.tagline }}</div>
+                            </md-card-header-text>
+                            <md-card-content>
+                                {{ project.description }}
+                            </md-card-content>
+
+                            <md-card-actions>
+                                <md-button :href=`${project.url}`>Visit Repository</md-button>
+                            </md-card-actions>
+                        </md-card-header>
+                        </md-ripple>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Setup Vue for VueMaterial
+        Vue.use(VueMaterial.default);
+
+        // Use our own custom class to avoid using lots of objects
+        class Project {
+            constructor (projectName, tagline, description, url, language, technologies) {
+                this.name = projectName;
+                this.tagline = tagline;
+                this.description = description;
+                this.url = url;
+                this.language = language;
+                this.technologies = technologies;
+            }
+        }
+
+        new Vue({
+            el: "#vue-root",
+            data: {
+                projects: [
+                    new Project("Meme", "OOF", "Yikes", "https://github.com/GetRektByMeh/Pixie", "Python", ["Flask", "Django"]),
+                ]
+            }
+        });
+    </script>
 </body>
 </html>
