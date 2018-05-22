@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!-- I should change this at some point -->
-    <title>My Portfolio</title>
+    <title>Byron Vanstien</title>
 
     <!-- Load Our CSS In -->
     <link rel="stylesheet" type="text/css" href="./css/vue-material.min.css">
@@ -10,8 +10,8 @@
 
     <style>
         /* Center the content a little */
-        div#wrapper {
-            margin: 0 10% 0 10%;
+        div.wrapper {
+            margin: 0 15% 0 15%;
         }
     </style>
 </head>
@@ -23,29 +23,33 @@
     <!-- Div for Vue to bind to -->
     <div id="vue-root">
         <md-app md-waterfall md-mode="fixed">
-            <md-app-toolbar>
-                <span class="md-title">Recchan (Byron Vanstien)</span>
+            <md-app-toolbar style="background-color: #506ed2;">
+                <span class="md-title" style="color: #FFFEEE;">Byron Vanstien (Recchan)</span>
             </md-app-toolbar>
         </md-app>
-        <div id="wrapper">
-            <div class="md-layout md-gutter">
-                <div class="md-layout-item" v-for="project in projects" style="min-width: 33%; margin-top: 1%;">
-                    <md-card md-with-hover>
-                        <md-ripple>
-                        <md-card-header>
-                            <md-card-header-text>
-                                <div class="md-title">{{ project.name }}</div>
-                                <div class="md-subhead">{{ project.tagline }}</div>
-                            </md-card-header-text>
-                            <md-card-content>
-                                {{ project.description }}
-                            </md-card-content>
 
-                            <md-card-actions>
-                                <md-button :href=`${project.url}`>Visit Repository</md-button>
-                            </md-card-actions>
+
+        <!-- Wrapper for project information stuff-->
+        <div class="wrapper" style="margin-top: 0.5%;">
+
+            <div class="md-layout md-gutter">
+                <div class="md-layout-item" v-for="project in projects">
+                    <md-card md-with-hover style="margin-top: 2%;">
+                        <md-card-header>
+                            <div class="md-title">{{ project.name }}</div>
+                            <div class="md-subhead">{{ project.tagline }}</div>
                         </md-card-header>
-                        </md-ripple>
+                        <md-card-content>
+                            {{ project.description }}
+                            <br>
+                            <br>
+                            Technologies Used
+                            <md-divider></md-divider>
+                            <md-chip style="margin-bottom: 1.5%; margin-top: 1.5%;" v-for="technology in project.technologies">{{ technology }}</md-chip>
+                        </md-card-content>
+                        <md-card-actions>
+                            <md-button :href=`${project.url}`>Visit Repository</md-button>
+                        </md-card-actions>
                     </md-card>
                 </div>
             </div>
@@ -64,6 +68,8 @@
                 this.url = url;
                 this.language = language;
                 this.technologies = technologies;
+
+                this.technologies.push(this.language); // May display this differently in the future, so make sure it exists independently
             }
         }
 
@@ -71,7 +77,34 @@
             el: "#vue-root",
             data: {
                 projects: [
-                    new Project("Meme", "OOF", "Yikes", "https://github.com/GetRektByMeh/Pixie", "Python", ["Flask", "Django"]),
+                    new Project(
+                        "Pixie",
+                        "A Discord bot focused on Japanese pop culture",
+                        `This project included a multitude of different features including not only music streaming, 
+                         but pulling data from external API's. Pixie also featured locked code evaluation and some basic moderation commands.
+                         This was my first project as well as my first project to cater to users.`,
+                        "https://github.com/GetRektByMe/Pixie",
+                        "Python",
+                        ["Git"]
+                    ),
+                    new Project(
+                        "Pyanimelist",
+                        "An asynchronous wrapper for MyAnimeList's API",
+                        `This project includes different HTTP requests made to an API in order to retrieve data and then abstract the data into classes for ease of use.
+                         This library was more meant for use by developers who wanted to integrate features offered by the MyAnimeList API into their project. This ended up getting used in Pixie for both anime and manga searching!`,
+                        "https://github.com/GetRektByMe/PyAnimeList",
+                        "Python",
+                        ["Git", "Sphinx"]
+                    ),
+                    new Project(
+                        "Listen",
+                        "An API wrapper for Listen.moe",
+                        `This project meant to serve as a wrapper for the listen.moe API, with support not only for the HTTP API, but also for the websockets API. This allowed me to get the songs that are currently playing on the website,
+                         as well as do things like add to my favourite song list progamatically.`,
+                        "https://github.com/GetRektByMe/Listen",
+                        "Python",
+                        ["Git", "Sphinx", "Websockets"]
+                    )
                 ]
             }
         });
