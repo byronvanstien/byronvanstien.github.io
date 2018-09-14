@@ -1,17 +1,22 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <!-- I should change this at some point -->
-    <title>Byron Vanstien</title>
+    <title>Portfolio | Byron Vanstien</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Load Our CSS In -->
     <link rel="stylesheet" type="text/css" href="./css/vue-material.min.css">
     <link rel="stylesheet" type="text/css" href="./css/vue-material-default.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
 
     <style>
         /* Center the content a little */
         div.wrapper {
             margin: 0 15% 0 15%;
+        }
+        /* show some space under last card on mobile devices */
+        @media only screen and (max-width: 720px) {
+            body {
+                margin-bottom: 3%;
+            }
         }
     </style>
 </head>
@@ -24,7 +29,7 @@
     <div id="vue-root">
         <md-app md-waterfall md-mode="fixed">
             <md-app-toolbar style="background-color: #506ed2;">
-                <span class="md-title" style="color: #FFFEEE;">Byron Vanstien (Recchan)</span>
+                <span class="md-title" style="color: #FFFEEE;">Byron Vanstien</span>
             </md-app-toolbar>
         </md-app>
 
@@ -43,8 +48,7 @@
                             {{ project.description }}
                             <br>
                             <br>
-                            Technologies Used
-                            <md-divider></md-divider>
+                            <b style="display: block;">Technologies Used</b>
                             <md-chip style="margin-bottom: 1.5%; margin-top: 1.5%;" v-for="technology in project.technologies">{{ technology }}</md-chip>
                         </md-card-content>
                         <md-card-actions>
@@ -59,53 +63,26 @@
         // Setup Vue for VueMaterial
         Vue.use(VueMaterial.default);
 
-        // Use our own custom class to avoid using lots of objects
-        class Project {
-            constructor (projectName, tagline, description, url, language, technologies) {
-                this.name = projectName;
-                this.tagline = tagline;
-                this.description = description;
-                this.url = url;
-                this.language = language;
-                this.technologies = technologies;
+        function automateProjectCreation (list) {
+            /**
+             * @param {array} list
+             */
 
-                this.technologies.push(this.language); // May display this differently in the future, so make sure it exists independently
+            let ret = [];
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                ret.push(Project(list[i]))
             }
+
+            return ret;
         }
+
+        let projects = JSON.parse(fetch("https://recchan.moe/projects.json"));
 
         new Vue({
             el: "#vue-root",
             data: {
-                projects: [
-                    new Project(
-                        "Pixie",
-                        "A Discord bot focused on Japanese pop culture",
-                        `This project included a multitude of different features including not only music streaming, 
-                         but pulling data from external API's. Pixie also featured locked code evaluation and some basic moderation commands.
-                         This was my first project as well as my first project to cater to users.`,
-                        "https://github.com/GetRektByMe/Pixie",
-                        "Python",
-                        ["Git"]
-                    ),
-                    new Project(
-                        "Pyanimelist",
-                        "An asynchronous wrapper for MyAnimeList's API",
-                        `This project includes different HTTP requests made to an API in order to retrieve data and then abstract the data into classes for ease of use.
-                         This library was more meant for use by developers who wanted to integrate features offered by the MyAnimeList API into their project. This ended up getting used in Pixie for both anime and manga searching!`,
-                        "https://github.com/GetRektByMe/PyAnimeList",
-                        "Python",
-                        ["Git", "Sphinx"]
-                    ),
-                    new Project(
-                        "Listen",
-                        "An API wrapper for Listen.moe",
-                        `This project meant to serve as a wrapper for the listen.moe API, with support not only for the HTTP API, but also for the websockets API. This allowed me to get the songs that are currently playing on the website,
-                         as well as do things like add to my favourite song list progamatically.`,
-                        "https://github.com/GetRektByMe/Listen",
-                        "Python",
-                        ["Git", "Sphinx", "Websockets"]
-                    )
-                ]
+                projects: automateProjectCreation(projects)
             }
         });
     </script>

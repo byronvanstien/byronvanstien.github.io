@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Pixie",
+        "tagline": "A Discord bot focused on Japanese pop culture",
+        "description": "This project included a multitude of different features including not only music streaming, but pulling data from external API's. Pixie also featured locked code evaluation and some basic moderation commands. This was my first large project as well as my first project to cater to a user environment, as opposed to a developer one.",
+        "urls": {
+            "githubURL": "https://github.com/GetRektByMe/Pixie",
+            "websiteURL": null
+        },
+        "language": "Python",
+        "technologies": ["Git"]
+    },
+    {
+        "name": "Pyanimelist",
+        "tagline": "An asynchronous wrapper for MyAnimeList's API",
+        "description": "This project includes different HTTP requests made to an API in order to retrieve data and then abstract the data into classes for ease of use. This library was more meant for use by developers who wanted to integrate features offered by the MyAnimeList API into their project. This ended up getting used in Pixie for both anime and manga searching!",
+        "urls": {
+            "githubURL": "https://github.com/GetRektByMe/PyAnimeList",
+            "websiteURL": null
+        },
+        "language": "Python",
+        "technologies": ["Git", "Sphinx"]
+    },
+    {
+        "name": "Listen",
+        "tagline": "An API wrapper for Listen.moe",
+        "description": "This project meant to serve as a wrapper for the listen.moe API, with support not only for the HTTP API, but also for the websockets API. This allowed me to get the songs that are currently playing on the website, as well as do things like add to my favourite song list progamatically.",
+        "urls": {
+            "githubURL": "https://github.com/GetRektByMe/Listen",
+            "websiteURL": null
+        },
+        "language": "Python",
+        "technologies": ["Git", "Sphinx", "Websockets"]
+    }
+]
