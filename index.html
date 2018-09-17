@@ -52,7 +52,7 @@
                             <md-chip style="margin-bottom: 1.5%; margin-top: 1.5%;" v-for="technology in project.technologies">{{ technology }}</md-chip>
                         </md-card-content>
                         <md-card-actions>
-                            <md-button :href=`${project.url}`>Visit Repository</md-button>
+                            <md-button :href=`${project.urls.githubURL}`>Visit Repository</md-button>
                         </md-card-actions>
                     </md-card>
                 </div>
