@@ -12,7 +12,7 @@ class Project {
         this.name = data.name;
         this.tagline = data.tagline
         this.description = data.description;
-        this.urls = URLAbstraction({
+        this.urls = new URLAbstraction({
             githubURL: data.urls.githubURL,
             websiteURL: data.urls.websiteURL
         })

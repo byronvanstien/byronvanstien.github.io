@@ -59,30 +59,52 @@
             </div>
         </div>
     </div>
+    <script src="./js/project.js"></script>
     <script>
         // Setup Vue for VueMaterial
         Vue.use(VueMaterial.default);
 
-        function automateProjectCreation (list) {
+        function requestProjectJSON () {
+
+            let req = new XMLHttpRequest();
+            let respText;
+
+            req.onreadystatechange = function() {
+                if (req.readyState == 4 && req.status == 200) {
+                    respText = req.responseText;
+                }
+            }
+
+            req.open("GET", "https://recchan.moe/projects.json", false);
+            req.send();
+
+            return respText;
+        }
+
+        function automateProjectCreation () {
             /**
              * @param {array} list
              */
 
-            let ret = [];
+            let rawProjectData = requestProjectJSON();
 
-            for (var i = list.length - 1; i >= 0; i--) {
-                ret.push(Project(list[i]))
+            let parsedProjectData = JSON.parse(rawProjectData);
+
+            let ret = new Array();
+
+            for (let i = parsedProjectData.length - 1; i >= 0; i--) {
+                ret.push(new Project(parsedProjectData[i]))
             }
 
             return ret;
         }
 
-        let projects = JSON.parse(fetch("https://recchan.moe/projects.json"));
+
 
         new Vue({
             el: "#vue-root",
             data: {
-                projects: automateProjectCreation(projects)
+                projects: automateProjectCreation()
             }
         });
     </script>
